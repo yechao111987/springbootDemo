@@ -1,4 +1,4 @@
-package com.reposity.mysql;
+package com.reposity.mysql.dao;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

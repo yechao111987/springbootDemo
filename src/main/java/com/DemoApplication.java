@@ -42,17 +42,24 @@ public class DemoApplication {
         new SpringApplicationBuilder(DemoApplication.class).web(true).run(args);
     }
 
-    @RequestMapping(value = "/test", produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/test1", produces = "text/plain;charset=UTF-8")
     String indextest() {
         String str = "My Name is " + appname + "," + "age is " + age + " !";
-        return str;
+        return "test1";
     }
 
     @RequestMapping(value = "/")
     public String index(ModelMap map) {
         map.addAttribute("host", "121212");
         String str = "My Name is " + appname + "," + "age is " + age + " !";
-        return "test1";
+        return "index";
+    }
+
+    @RequestMapping(value = "/index")
+    public String toIndex(ModelMap map) {
+        map.addAttribute("host", "121212");
+        String str = "My Name is " + appname + "," + "age is " + age + " !";
+        return "index";
     }
 
     @RequestMapping(value = "/book", produces = "text/plain;charset=UTF-8")
@@ -61,10 +68,17 @@ public class DemoApplication {
         return str;
     }
 
-    @GetMapping("/user/login")
+    @GetMapping("/login")
     public String login(String name, String password) {
         logger.info("/user/login接收参数name={},password={}", name, password);
 //        return userDao.countByNameAndPassword(name, password);
-        return "aa";
+        return "login";
+    }
+
+    @GetMapping("/tables")
+    public String toTables(String name, String password) {
+        logger.info("/user/login接收参数name={},password={}", name, password);
+//        return userDao.countByNameAndPassword(name, password);
+        return "tables";
     }
 }
