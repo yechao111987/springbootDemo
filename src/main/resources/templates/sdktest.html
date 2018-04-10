@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SDK.js TestPage</title>
+    <script type="text/javascript" src="http://yechao.xianzhi.netease.com/sdk.js">
+    // <script type="text/javascript" src="sdkDemo.js">
+    <!--<script type="text/javascript" src="/sdk.js">-->
+    </script>
+    <script type="text/javascript">
+        window.prophet || ((prophet = function () {
+            prophet.q.push(arguments)
+        }).q = []);
+
+        function clickButton() {
+            var userId=document.getElementById('userid').value;
+            var eventId=document.getElementById('eventid').value;
+            var paramsStr = document.getElementById('event').value;
+            console.info(paramsStr);
+            let json=eval('('+paramsStr+')');
+            prophet('logEvent', eventId, json);
+            prophet('logUser', userId, json);
+            console.info(prophet.toString());
+        }
+    </script>
+
+</head>
+<body>
+<label>userId:</label>
+<input id="userid" type="text" value="1" onfocus="if(value==1){value=''}" onblur="if (value ==''){value='1' }">
+<label>eventId:</label>
+<input id="eventid" type="text" value="100007" onfocus="if(value==100007){value=''}" onblur="if (value ==''){value='100007'}" >
+<label>Attributes:</label>
+<input id="event" type="text" style="width: 300px;height: 200px" value="{a:'1',b:'2'}">
+<button onclick="clickButton()">按钮</button>
+
+</body>
+</html>

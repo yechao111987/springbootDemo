@@ -53,7 +53,7 @@ public class TestSystem {
         return createtime;
     }
 
-    public void setCreatetime(String create_time) {
+    public void setCreatetime(String createtime) {
         this.createtime = createtime;
     }
 
@@ -61,7 +61,7 @@ public class TestSystem {
         return updatetime;
     }
 
-    public void setUpdatetime(String update_time) {
+    public void setUpdatetime(String updatetime) {
         this.updatetime = updatetime;
     }
 }

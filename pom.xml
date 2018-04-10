@@ -22,6 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <env>dev</env>
     </properties>
 
     <dependencies>
@@ -67,9 +68,42 @@
             <artifactId>nekohtml</artifactId>
             <version>1.9.22</version>
         </dependency>
+        <!-- 引入freemarker模板引擎的依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.46</version>
+        </dependency>
+
     </dependencies>
+    <profiles>
+        <!--dev env-->
+        <profile>
+            <id>dev</id>
+        </profile>
+        <!--test env -->
+        <profile>
+            <id>test</id>
+        </profile>
+    </profiles>
 
     <build>
+        <finalName>SpringBootDemo</finalName>
+        <filters>
+            <filter>../src/main/filters/{env}-application.properties</filter>
+            <filter>../src/main/filters/{env}-application.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory></directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/common/vue.js""></script>
+    <script src="/common/axios.min.js""></script>
+
+    <script>
+        function person(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        function student(name, age, grade) {
+            person.apply(this, arguments);
+            this.grade = grade;
+        }
+
+        var stu = new student("yechao", 15, "grade1");
+        console.info("student name:" + stu.name);
+
+        var a = 2;
+        var b = 'text';
+        var c1 = a && b;
+        console.info(c1);
+        var c2 = a || b;
+        console.info(c2);
+
+        window.prophet = function () {
+            let method = arguments[0];
+            let args = Array.prototype.slice.call(arguments, 1);
+            let fn = api[method];
+            fn && fn.apply(api, args);
+        };
+
+        let api = {
+            logUser: function (uid, attributes) {
+                if (!uid) return;
+                let params = core.formatAttributes(attributes, '_pua');
+                params._ptc = core.tenantCode;
+                params._puid = uid;
+                core.sendAnalytics('http://tracker.prophet.netease.com/user.gif', params);
+            },
+            logEvent: function (eid, attributes) {
+                if (!eid) {
+                    console.info('111');
+                    return
+                }
+                ;
+                let params = core.formatAttributes(attributes, '_pea');
+                params._ptc = core.tenantCode;
+                params._peid = eid;
+                core.sendAnalytics('http://tracker.prophet.netease.com/event.gif', params);
+                console.info('12121');
+            }
+        };
+
+        let core = {
+            tenantCode: "yechao",
+
+            serialize: function (params) {
+                let queryString = '';
+                for (let key in params) {
+                    let value = params[key];
+                    if (value == undefined) continue;
+                    if (queryString) queryString += '&';
+                    queryString += (key + '=' + value);
+                }
+                return queryString;
+            },
+
+            formatAttributes: function (attributes, attrPrefix) {
+                let transformed = {};
+                for (let key in attributes) {
+                    let value = attributes[key];
+                    let prefix = Number.isNaN(value) ? attrPrefix + '_' : attrPrefix + 'n_';
+                    transformed[prefix + key] = value;
+                }
+                return transformed;
+            },
+
+            sendAnalytics: function (url, params, onload, onerror) {
+                let src = url + '?' + this.serialize(params);
+                let beacon = new Image();
+                beacon.onload = onload;
+                beacon.onerror = onerror;
+                beacon.src = src;
+            }
+        };
+        // prophet('logEvent','1',{a:1,b:1});
+
+        let q = [];
+        for (let i = 0; i < q.length; ++i) {
+            prophet.apply(null, q[i]);
+        }
+
+    </script>
+    <script>prophet('logEvent','1',{a:a,b:b})</script>
+    <script>
+        let jsonstr="{a:1,b:2}";
+        let json=eval('('+jsonstr+')');
+        console.info(json);
+    </script>
+    <script>
+        axios.post("/testsystem/add",{'sysname':'sysname','description':'des','status':'1'}).then(function (res) {alert(res.data);});
+    </script>
+</head>
+<body>
+<script src="../vendor/jquery/jquery.min.js"></script>
+<!-- DataTables CSS -->
+<link href="../vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+<!-- DataTables Responsive CSS -->
+<link href="../vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- DataTables JavaScript -->
+<script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+<script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
+<table width="100%" class="table table-striped table-bordered table-hover"
+       id="dataTables-example">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>系统</th>
+        <th>描述</th>
+        <th>创建时间</th>
+        <th>修改时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="odd gradeX" th:each="system:${data}">
+        <td th:text="${system.id}">系统id</td>
+        <td th:text="${system.sysname}">系统id</td>
+        <td th:text="${system.description}">系统id</td>
+        <td th:text="${system.createtime}">系统id</td>
+        <td th:text="${system.updatetime}">系统id</td>
+        <td>
+            <div>
+                <button>Edit</button>
+            </div>
+            <div>
+                <button>Delete</button>
+            </div>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });//jquery新建一个表格
+</script>
+
+
+
+</body>
+</html>

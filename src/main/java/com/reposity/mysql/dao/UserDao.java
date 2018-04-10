@@ -19,4 +19,13 @@ public interface UserDao extends JpaRepository<User,Long> {
     @Query("select count(1) from User where name=:name and password=:password")
     int countByNameAndPassword(@Param("name") String name,@Param("password") String password);
 
+    /**
+     * Saves a given entity. Use the returned instance for further operations as the save operation might have changed the
+     * entity instance completely.
+     *
+     * @param entity
+     * @return the saved entity
+     */
+    @Override
+    <S extends User> S save(S entity);
 }
