@@ -38,7 +38,7 @@ public class TestSystemServiceImpl implements TestSystemService{
     public Response<TestSystem> save(TestSystemForm testSystemForm) {
         Response<TestSystem> response=new Response<>();
         TestSystem testSystem=new TestSystem();
-        testSystem.setStatus(testSystemForm.getStatus());
+        testSystem.setStatus("1");
         testSystem.setSysname(testSystemForm.getSysname());
         testSystem.setDescription(testSystemForm.getDescription());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//定义要输出日期字符串的格式

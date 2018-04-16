@@ -17,15 +17,15 @@ public class TestSystemForm {
         this.description = description;
     }
 
-    public String getStatus() {
-        return status;
-    }
+//    public String getStatus() {
+//        return status;
+//    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+//    public void setStatus(String status) {
+//        this.status = status;
+//    }
 
     private String sysname;
     private String description;
-    private String status;
+//    private String status;
 }

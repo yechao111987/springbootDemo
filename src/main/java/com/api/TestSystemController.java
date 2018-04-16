@@ -48,8 +48,17 @@ public class TestSystemController {
     @PostMapping("/testsystem/add")
     @ResponseBody
     public Response<TestSystem> addtestSystem(@RequestBody TestSystemForm testSystemForm){
-        logger.info(testSystemForm.getDescription()+","+testSystemForm.getStatus());
+        logger.info("description:{},name:{}",testSystemForm.getDescription(),testSystemForm.getSysname());
         return testSystemService.save(testSystemForm);
+    }
+
+    @PostMapping("/testsystem/test")
+    @ResponseBody
+    public Response<Boolean> test(@RequestParam("test1") String test1,@RequestBody TestSystemForm testSystemForm){
+        logger.info("参数1：{}，参数2：{}",test1,testSystemForm.toString());
+        return null;
+
+
     }
 
 

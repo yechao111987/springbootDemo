@@ -36,7 +36,6 @@ public class UserController {
         System.out.println(name);
         int result=userDao.countByNameAndPassword(name,password);
         return String.valueOf(result);
-
     }
 
 
