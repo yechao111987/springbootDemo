@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.domain.Page;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -27,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 @SpringBootApplication   //整个Spring Boot的核心注解，它的目的就是开启Spring Boot的自动配置
 //@RestController   //使之变为一个Controller，然后里边提供一个地址转换方法
 @Controller
+@EnableCaching
+@EnableScheduling
 public class DemoApplication {
 
     @Value("${config.name}")
@@ -61,7 +65,7 @@ public class DemoApplication {
 
     @RequestMapping(value = "/sdktest", produces = "text/plain;charset=UTF-8")
     String sdktest(HttpServletResponse response, HttpServletRequest request) {
-        Cookie cookie=new Cookie("yechao","yechaovalue");
+        Cookie cookie = new Cookie("yechao", "yechaovalue");
         cookie.setMaxAge(600);
         response.addCookie(cookie);
         return "sdktest";
@@ -96,11 +100,11 @@ public class DemoApplication {
     }
 
     @GetMapping("/tables")
-    public String toTables(String name, String password,Model model) {
+    public String toTables(String name, String password, Model model) {
         logger.info("/user/login接收参数name={},password={}", name, password);
 //        return userDao.countByNameAndPassword(name, password);
-        Page<TestSystem> pages=testSystemService.queryByPage(0,100);
-        model.addAttribute("data",pages.getContent());
+        Page<TestSystem> pages = testSystemService.queryByPage(0, 100);
+        model.addAttribute("data", pages.getContent());
         return "tables";
     }
 
@@ -110,7 +114,7 @@ public class DemoApplication {
 //        logger.info("/user/login接收参数name={},password={}", name, password);
 //        return userDao.countByNameAndPassword(name, password);
         //设置响应信息，不设置无法调用js内容
-        response.setHeader("Content-Type","application/javascript;charset=UTF-8");
+        response.setHeader("Content-Type", "application/javascript;charset=UTF-8");
         return "sdk";
     }
 }
