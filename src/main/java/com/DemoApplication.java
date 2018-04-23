@@ -29,8 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 @SpringBootApplication   //整个Spring Boot的核心注解，它的目的就是开启Spring Boot的自动配置
 //@RestController   //使之变为一个Controller，然后里边提供一个地址转换方法
 @Controller
-@EnableCaching
-@EnableScheduling
+@EnableCaching    //开启缓存注解
+@EnableScheduling   //开启定时任务注解
 public class DemoApplication {
 
     @Value("${config.name}")
