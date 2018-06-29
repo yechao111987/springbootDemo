@@ -1,6 +1,14 @@
 package com;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.api.service.TestSystemService;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonAnyFormatVisitor;
+import com.google.openrtb.OpenRtb;
+import com.google.openrtb.json.OpenRtbJsonFactory;
+import com.google.openrtb.json.OpenRtbJsonWriter;
+import com.google.openrtb.youdao.OpenRtbYDExtForDsp;
+import com.google.protobuf.ExtensionRegistry;
 import com.reposity.mysql.apitest.TestSystem;
 import com.reposity.mysql.apitest.TestSystemDao;
 import com.reposity.mysql.dao.UserDao;
@@ -17,14 +25,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.testng.annotations.Test;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 
 @SpringBootApplication   //整个Spring Boot的核心注解，它的目的就是开启Spring Boot的自动配置
 //@RestController   //使之变为一个Controller，然后里边提供一个地址转换方法
@@ -71,12 +79,76 @@ public class DemoApplication {
         return "sdktest";
     }
 
-    @RequestMapping(value = "/")
-    public String index(ModelMap map) {
-        map.addAttribute("host", "121212");
-        String str = "My Name is " + appname + "," + "age is " + age + " !";
-        return "index";
+
+
+    private static ExtensionRegistry extensionRegistry = ExtensionRegistry.newInstance();
+
+    static {
+        OpenRtbYDExtForDsp.registerAllExtensions(extensionRegistry);
     }
+
+    private static String toString(HttpServletRequest request) {
+        String valueStr = "";
+        try {
+            StringBuffer sb = new StringBuffer();
+            InputStream is = request.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String s = "";
+            while ((s = br.readLine()) != null) {
+                sb.append(s);
+            }
+            valueStr = sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            valueStr = "";
+        }
+        return valueStr;
+    }
+
+
+    @RequestMapping(value = "/yex", produces = "application/json")
+    @ResponseBody
+    public String toYex(ModelMap map, HttpServletRequest request, HttpServletResponse response, @RequestBody String json) throws IOException {
+//        logger.info(JSON.toJSONString(bidRequest.getId()));
+//        System.out.println(request.getInputStream().isReady());
+        System.out.println(json);
+        JSONObject jsonObject = JSON.parseObject(json);
+//        System.out.println(getId());
+
+//        OpenRtb.BidRequest bidRequest = yexOpenRtbJsonFactory.newReader().readBidRequest(par);
+//        yexOpenRtbJsonFactory.newReader().readBidRequest();
+//        System.out.println(bidRequest.getId());
+        System.out.println(request.getInputStream().toString());
+//        System.out.println(toString(request));
+
+//        if (null==bidRequest){
+//            System.out.println("null");
+//        }
+        OpenRtb.BidResponse.Builder bidResponse = OpenRtb.BidResponse.newBuilder();
+        bidResponse.setId("1");
+        bidResponse.setNbr(OpenRtb.BidResponse.NoBidReason.UNSUPPORTED_DEVICE);
+//        bid.setAdmNative()
+//        System.out.println(JSON.toJSONString(bidResponse));
+
+
+//        response.getOutputStream().write();
+        String res = yexOpenRtbJsonFactory.newWriter().writeBidResponse(bidResponse.build());
+
+        return res;
+    }
+
+
+    public static YexOpenRtbJsonFactory yexOpenRtbJsonFactory = YexOpenRtbJsonFactory.create()
+            .yexRegister(new YDExtBattriReader(), OpenRtb.BidRequest.Imp.Native.Builder.class)
+            .yexRegister(new YDExtAttriReader(), OpenRtb.BidResponse.SeatBid.Bid.Builder.class)
+            .yexRegister(new YDExtStandardSchemaIdReader(), OpenRtb.BidRequest.Imp.Builder.class)
+            .yexRegister(new YDExtStandardAssetReader<>(OpenRtbYDExtForDsp.sasset, Constants.EXTEND_STANDARD_ASSET_FIELD_NAME), OpenRtb.NativeRequest.Asset.Builder.class)
+            .yexRegister(new YDExtBattriWriter(), Integer.class, OpenRtb.BidRequest.Imp.Native.class, Constants.EXTEND_BATTRI_FIELD_NAME)
+            .yexRegister(new YDExtDataAssetTypeWriter(), Integer.class, OpenRtb.NativeRequest.Asset.Data.class, Constants.EXTEND_DATA_ASSET_TYPE_FIELD_NAME)
+            .yexRegister(new YDExtStandardSchemaIdWriter(), Integer.class, OpenRtb.BidRequest.Imp.class, Constants.EXTEND_STANDARD_SCHEMA_ID_FIELD_NAME)
+            .yexRegister(new YDExtStandardAssetWriter(), OpenRtb.NativeRequest.Asset.class, OpenRtb.NativeRequest.Asset.class, Constants.EXTEND_STANDARD_ASSET_FIELD_NAME);
+
 
     @RequestMapping(value = "/index")
     public String toIndex(ModelMap map) {

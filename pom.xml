@@ -55,6 +55,12 @@
             <artifactId>testng</artifactId>
             <version>6.8.8</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <!--<scope>test</scope>-->
+        </dependency>
         <!--springboot 热部署插件,springboot 1.3开始支持-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -85,6 +91,32 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.46</version>
         </dependency>
+
+
+        <!--openrtb 广告实时竞价系统 -->
+        <!--<dependency>-->
+        <!--<groupId>com.google.openrtb</groupId>-->
+        <!--<artifactId>openrtb-core</artifactId>-->
+        <!--<version>0.9.8</version>-->
+        <!--</dependency>-->
+        <!--protobuf java-->
+        <!--<dependency>-->
+        <!--<groupId>com.google.protobuf</groupId>-->
+        <!--<artifactId>protobuf-java</artifactId>-->
+        <!--<version>2.6.1</version>-->
+        <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.45</version>
+        </dependency>
+        <dependency>
+            <groupId>com.youdao</groupId>
+            <artifactId>yex-tool</artifactId>
+            <version>1.0.0</version>
+            <systemPath>${basedir}/lib/yex-tool-1.0.0.jar</systemPath>
+        </dependency>
     </dependencies>
     <profiles>
         <!--dev env-->
@@ -99,16 +131,16 @@
 
     <build>
         <finalName>SpringBootDemo</finalName>
-        <filters>
-            <filter>../src/main/filters/{env}-application.properties</filter>
-            <filter>../src/main/filters/{env}-application.properties</filter>
-        </filters>
-        <resources>
-            <resource>
-                <directory></directory>
-                <filtering>false</filtering>
-            </resource>
-        </resources>
+        <!--<filters>-->
+        <!--<filter>../src/main/filters/{env}-application.properties</filter>-->
+        <!--<filter>../src/main/filters/{env}-application.properties</filter>-->
+        <!--</filters>-->
+        <!--<resources>-->
+        <!--<resource>-->
+        <!--<directory></directory>-->
+        <!--<filtering>false</filtering>-->
+        <!--</resource>-->
+        <!--</resources>-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -120,6 +152,22 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>0.5.0</version>
+                <configuration>
+                    <protocExecutable>E:\work\protobuf\protobuf-2.6.1\protoc.exe</protocExecutable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
