@@ -15,24 +15,22 @@ import java.util.Map;
  * @date 2018/6/29 16:20
  */
 public class JdbcUtil {
-//    private String url;
 
-    public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate(String url, String username, String password) {
+    public static NamedParameterJdbcTemplate getNamedParameterJdbcTemplate(String url, String username, String password) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource(url, username, password);
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         return namedParameterJdbcTemplate;
     }
 
-    public JdbcTemplate getJdbcTemplate(String url, String username, String password) {
+    public static JdbcTemplate getJdbcTemplate(String url, String username, String password) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource(url, username, password);
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return jdbcTemplate;
     }
 
-    public List<Map<String, Object>> queryData(NamedParameterJdbcTemplate namedParameterJdbcTemplate, String table, Map<String, Object> map) {
-//        NamedParameterJdbcTemplate namedParameterJdbcTemplate = getNamedParameterJdbcTemplate(url, name, password);
+    public static List<Map<String, Object>> queryData(NamedParameterJdbcTemplate namedParameterJdbcTemplate, String table, Map<String, Object> map) {
         List<Map<String, Object>> list = null;
         try {
             System.out.println(namedParameterJdbcTemplate.toString());
@@ -41,10 +39,10 @@ public class JdbcUtil {
             for (String key : map.keySet()) {
                 sqlBuffer.append(key + " =:" + key + " and ");
             }
-            sqlBuffer.append("1=1");
+            sqlBuffer.append("1 = 1");
             System.out.println(sqlBuffer.toString());
 //        Map<String,Object> map=new HashMap<>();
-            map.put("id", 1);
+//            map.put("id", 1);
             list = namedParameterJdbcTemplate.queryForList(sqlBuffer.toString(), map);
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,8 +59,8 @@ public class JdbcUtil {
         String password = "yechao";
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = getNamedParameterJdbcTemplate(url, name, password);
         Map<String, Object> map = new HashMap<>();
-        map.put("id", "1");
-        map.put("sysname", "系统1");
+        map.put("id", "2");
+//        map.put("sysname", "系统1");
         String table = "system";
         List<Map<String, Object>> list = queryData(namedParameterJdbcTemplate, table, map);
         System.out.println(JSON.toJSONString(list));
@@ -77,9 +75,9 @@ public class JdbcUtil {
         String password = "yechao";
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = getNamedParameterJdbcTemplate(url, name, password);
         System.out.println(namedParameterJdbcTemplate.toString());
-        String sql = "select * from api.system where id = :id";
+        String sql = "select * from system where id = :id and 1=1";
         Map<String, Object> map = new HashMap<>();
-        map.put("id", 1);
+        map.put("id", "21");
         List<Map<String, Object>> list = namedParameterJdbcTemplate.queryForList(sql, map);
         System.out.println(JSON.toJSONString(list));
 
