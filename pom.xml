@@ -115,6 +115,7 @@
             <groupId>com.youdao</groupId>
             <artifactId>yex-tool</artifactId>
             <version>1.0.0</version>
+            <scope>system</scope>
             <systemPath>${basedir}/lib/yex-tool-1.0.0.jar</systemPath>
         </dependency>
     </dependencies>
