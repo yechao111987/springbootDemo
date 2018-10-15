@@ -3,10 +3,7 @@ package com;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.api.service.TestSystemService;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonAnyFormatVisitor;
 import com.google.openrtb.OpenRtb;
-import com.google.openrtb.json.OpenRtbJsonFactory;
-import com.google.openrtb.json.OpenRtbJsonWriter;
 import com.google.openrtb.youdao.OpenRtbYDExtForDsp;
 import com.google.protobuf.ExtensionRegistry;
 import com.reposity.mysql.apitest.TestSystem;
@@ -26,7 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.testng.annotations.Test;
+import yex.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -78,7 +75,6 @@ public class DemoApplication {
         response.addCookie(cookie);
         return "sdktest";
     }
-
 
 
     private static ExtensionRegistry extensionRegistry = ExtensionRegistry.newInstance();

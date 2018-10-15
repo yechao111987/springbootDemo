@@ -91,14 +91,11 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.46</version>
         </dependency>
-
-
-        <!--openrtb 广告实时竞价系统 -->
-        <!--<dependency>-->
-        <!--<groupId>com.google.openrtb</groupId>-->
-        <!--<artifactId>openrtb-core</artifactId>-->
-        <!--<version>0.9.8</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.google.openrtb</groupId>
+            <artifactId>openrtb-core</artifactId>
+            <version>0.9.8</version>
+        </dependency>
         <!--protobuf java-->
         <!--<dependency>-->
         <!--<groupId>com.google.protobuf</groupId>-->
