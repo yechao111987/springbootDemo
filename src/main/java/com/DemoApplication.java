@@ -77,11 +77,11 @@ public class DemoApplication {
     }
 
 
-    private static ExtensionRegistry extensionRegistry = ExtensionRegistry.newInstance();
+//    private static ExtensionRegistry extensionRegistry = ExtensionRegistry.newInstance();
 
-    static {
-        OpenRtbYDExtForDsp.registerAllExtensions(extensionRegistry);
-    }
+//    static {
+//        OpenRtbYDExtForDsp.registerAllExtensions(extensionRegistry);
+//    }
 
     private static String toString(HttpServletRequest request) {
         String valueStr = "";
@@ -129,21 +129,10 @@ public class DemoApplication {
 
 
 //        response.getOutputStream().write();
-        String res = yexOpenRtbJsonFactory.newWriter().writeBidResponse(bidResponse.build());
+//        String res = yexOpenRtbJsonFactory.newWriter().writeBidResponse(bidResponse.build());
 
-        return res;
+        return "wrong";
     }
-
-
-    public static YexOpenRtbJsonFactory yexOpenRtbJsonFactory = YexOpenRtbJsonFactory.create()
-            .yexRegister(new YDExtBattriReader(), OpenRtb.BidRequest.Imp.Native.Builder.class)
-            .yexRegister(new YDExtAttriReader(), OpenRtb.BidResponse.SeatBid.Bid.Builder.class)
-            .yexRegister(new YDExtStandardSchemaIdReader(), OpenRtb.BidRequest.Imp.Builder.class)
-            .yexRegister(new YDExtStandardAssetReader<>(OpenRtbYDExtForDsp.sasset, Constants.EXTEND_STANDARD_ASSET_FIELD_NAME), OpenRtb.NativeRequest.Asset.Builder.class)
-            .yexRegister(new YDExtBattriWriter(), Integer.class, OpenRtb.BidRequest.Imp.Native.class, Constants.EXTEND_BATTRI_FIELD_NAME)
-            .yexRegister(new YDExtDataAssetTypeWriter(), Integer.class, OpenRtb.NativeRequest.Asset.Data.class, Constants.EXTEND_DATA_ASSET_TYPE_FIELD_NAME)
-            .yexRegister(new YDExtStandardSchemaIdWriter(), Integer.class, OpenRtb.BidRequest.Imp.class, Constants.EXTEND_STANDARD_SCHEMA_ID_FIELD_NAME)
-            .yexRegister(new YDExtStandardAssetWriter(), OpenRtb.NativeRequest.Asset.class, OpenRtb.NativeRequest.Asset.class, Constants.EXTEND_STANDARD_ASSET_FIELD_NAME);
 
 
     @RequestMapping(value = "/index")
@@ -185,4 +174,27 @@ public class DemoApplication {
         response.setHeader("Content-Type", "application/javascript;charset=UTF-8");
         return "sdk";
     }
+
+
+//    private static OpenRtbJsonFactory openRtbJsonFactory = OpenRtbJsonFactory.create()
+//            .register(new YDExtBattriReader(), OpenRtb.BidRequest.Imp.Native.Builder.class)
+//            .register(new YDExtAttriReader(), OpenRtb.BidResponse.SeatBid.Bid.Builder.class)
+//            .register(new YDExtStandardSchemaIdReader(), OpenRtb.BidRequest.Imp.Builder.class)
+//            .register(new YDExtStandardAssetReader<>(OpenRtbYDExtForDsp.sasset, Constants.EXTEND_STANDARD_ASSET_FIELD_NAME), OpenRtb.NativeRequest.Asset.Builder.class)
+//            .register(new YDExtBattriWriter(), Integer.class, OpenRtb.BidRequest.Imp.Native.class, Constants.EXTEND_BATTRI_FIELD_NAME)
+//            .register(new YDExtDataAssetTypeWriter(), Integer.class, OpenRtb.NativeRequest.Asset.Data.class, Constants.EXTEND_DATA_ASSET_TYPE_FIELD_NAME)
+//            .register(new YDExtStandardSchemaIdWriter(), Integer.class, OpenRtb.BidRequest.Imp.class, Constants.EXTEND_STANDARD_SCHEMA_ID_FIELD_NAME)
+//            .register(new YDExtStandardAssetWriter(), OpenRtb.NativeRequest.Asset.class, OpenRtb.NativeRequest.Asset.class, Constants.EXTEND_STANDARD_ASSET_FIELD_NAME);
+//
+//    private static YexOpenRtbJsonFactory yexOpenRtbJsonFactory = YexOpenRtbJsonFactory.create()
+//            .yexRegister(new YDExtBattriReader(), OpenRtb.BidRequest.Imp.Native.Builder.class)
+//            .yexRegister(new YDExtAttriReader(), OpenRtb.BidResponse.SeatBid.Bid.Builder.class)
+//            .yexRegister(new YDExtStandardSchemaIdReader(), OpenRtb.BidRequest.Imp.Builder.class)
+//            .yexRegister(new YDExtStandardAssetReader<>(OpenRtbYDExtForDsp.sasset, Constants.EXTEND_STANDARD_ASSET_FIELD_NAME), OpenRtb.NativeRequest.Asset.Builder.class)
+//            .yexRegister(new YDExtBattriWriter(), Integer.class, OpenRtb.BidRequest.Imp.Native.class, Constants.EXTEND_BATTRI_FIELD_NAME)
+//            .yexRegister(new YDExtDataAssetTypeWriter(), Integer.class, OpenRtb.NativeRequest.Asset.Data.class, Constants.EXTEND_DATA_ASSET_TYPE_FIELD_NAME)
+//            .yexRegister(new YDExtStandardSchemaIdWriter(), Integer.class, OpenRtb.BidRequest.Imp.class, Constants.EXTEND_STANDARD_SCHEMA_ID_FIELD_NAME)
+//            .yexRegister(new YDExtStandardAssetWriter(), OpenRtb.NativeRequest.Asset.class, OpenRtb.NativeRequest.Asset.class, Constants.EXTEND_STANDARD_ASSET_FIELD_NAME);
+
+
 }
