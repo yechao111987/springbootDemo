@@ -56,6 +56,13 @@ public class DemoApplication {
 
     private static Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
+    @RequestMapping(value = "/app/house", produces = "text/plain;charset=UTF-8")
+    String house() {
+        String str = "My Name is " + appname + "," + "age is " + age + " !";
+        return "/app/house";
+    }
+
+
 
     public static void main(String[] args) {
 //        SpringApplication.run(DemoApplication.class, args);
