@@ -9,32 +9,104 @@
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/mint-ui@2.2.13/lib/style.css">
     <!-- 引入组件库 -->
-
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
 </head>
 <div id="app">
+    <mt-header title="计算器">
+        <!--<router-link to="/" slot="left">-->
+        <mt-button icon="back">返回</mt-button>
+        <!--</router-link>-->
+        <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
     <div>
-        <mt-navbar v-model="selected">
-            <mt-tab-item id="1">选项一</mt-tab-item>
-            <mt-tab-item id="2">选项二</mt-tab-item>
-            <mt-tab-item id="3">选项三</mt-tab-item>
+        <mt-navbar v-model="selected" @click.native="handleNavClick">
+            <mt-tab-item id="1">商业贷款</mt-tab-item>
+            <mt-tab-item id="2">公积金贷款</mt-tab-item>
+            <mt-tab-item id="3">组合型贷款</mt-tab-item>
         </mt-navbar>
     </div>
     <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-            <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
-            <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email"></mt-field>
-            <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"></mt-field>
-            <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone"></mt-field>
-            <mt-button @click.native="handleNativeClick">按钮</mt-button>
-            <mt-button @click="handleClick">按钮</mt-button>
+
+            <mt-field label="单价(元)" placeholder="请输入单价" v-model="form.price"></mt-field>
+            <mt-field label="面积(平方米)" placeholder="请输入面积" v-model="form.area"></mt-field>
+            <mt-field label="按揭比例(%)" placeholder="请输入按揭比例" v-model="form.percentage"></mt-field>
+            <mt-field label="按揭时间(年)" placeholder="请输入年份" v-model="form.year"></mt-field>
+            <mt-field label="利率(倍)" placeholder="请输入利率倍数" v-model="form.rate"></mt-field>
+            <mt-radio
+                    title="还款方式"
+                    v-model="form.type"
+                    :options="['等额本金', '等额本息']">
+            </mt-radio>
+            <!--<mt-button @click.native="handleNativeClick" visible="false">按钮</mt-button>-->
+            <mt-button @click="handleClick">计算</mt-button>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-            <mt-cell v-for="n in 4" :title="'测试 ' + n"/>
+            <mt-field label="贷款金额" placeholder="请输入金额" v-model="form.fundTotal"></mt-field>
+            <mt-field label="按揭时间(年)" placeholder="请输入年份" v-model="form.year" :visible.sync="isVisible"
+                      visible="false"></mt-field>
+            <!--<mt-field label="利率" placeholder="请输入利率倍数" v-model="form.rate"></mt-field>-->
+            <mt-radio
+                    title="还款方式"
+                    v-model="form.type"
+                    :options="['等额本金', '等额本息']">
+            </mt-radio>
+            <mt-button @click="handle2Click">计算</mt-button>
+
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
-            <mt-cell v-for="n in 6" :title="'选项 ' + n"/>
+            <mt-field label="公积金贷款金额" placeholder="请输入公积金贷款金额" v-model="form.fundTotalM"></mt-field>
+            <mt-field label="商业贷款金额" placeholder="请输入商业贷款金额" v-model="form.businessTotal"></mt-field>
+            <mt-field label="公积金按揭时间(年)" placeholder="请输入年份" v-model="form.fundYear" :visible.sync="isVisible"
+                      visible="false"></mt-field>
+            <mt-field label="商业按揭时间(年)" placeholder="请输入年份" v-model="form.businessYear"></mt-field>
+            <!--<mt-actionsheet-->
+            <!--:actions="years"-->
+            <!--v-model="form.businessYear">-->
+            <!--</mt-actionsheet>-->
+            <!--<mt-picker :slots="dataList" :visible-item-count="5" :show-toolbar="true" ref="picker" value-key="cName">-->
+            <!--<mt-button @click="handleConfirm" class="sure">确认</mt-button>-->
+            <!--</mt-picker>-->
+            <mt-field label="商贷利率" placeholder="请输入利率倍数" v-model="form.businessRate"></mt-field>
+            <!--<mt-field label="利率" placeholder="请输入利率倍数" v-model="form.rate"></mt-field>-->
+            <mt-radio
+                    title="公积金贷款还款方式"
+                    v-model="form.fundType"
+                    :options="['等额本金', '等额本息']">
+            </mt-radio>
+            <mt-radio
+                    title="商业贷款还款方式"
+                    v-model="form.businessType"
+                    :options="['等额本金', '等额本息']">
+            </mt-radio>
+            <mt-button @click="handle3Click">计算</mt-button>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="订单">
+        </mt-tab-container-item>
+        <mt-tab-container-item id="发现">
+        </mt-tab-container-item>
+        <mt-tab-container-item id="我的">
         </mt-tab-container-item>
     </mt-tab-container>
+
+    <mt-tabbar v-model="tab" @click.native="handleTabClick">
+        <mt-tab-item id="tab1">
+            <img slot="icon">
+            外卖
+        </mt-tab-item>
+        <mt-tab-item id="订单">
+            <img slot="icon">
+            订单
+        </mt-tab-item>
+        <mt-tab-item id="发现">
+            <img slot="icon">
+            发现
+        </mt-tab-item>
+        <mt-tab-item id="我的">
+            <img slot="icon">
+            我的
+        </mt-tab-item>
+    </mt-tabbar>
 
 
 </div>
@@ -46,23 +118,87 @@
     var vm1 = new Vue({
         el: '#app',
         data: {
+            tab: 'tab1',
+            form: {
+                year: 30,
+                businessYear: 30,
+                fundYear: 30,
+                type: '等额本金',
+                rate: 1.2,
+                businessRate: 1.2,
+                percentage: 70
+            },
             username: 12121,
             selected: '1',
             email: 1,
             password: 1,
             tel: 1,
             phone: 1,
+            isVisible: false,
+            years: ['10', '20', '25', '30'],
         },
         created: function () {
             console.info("1111");
         },
+        mounted() {
+            console.info(this.tab);
+        },
+        computed: {},
         methods: {
-            handleClick: function () {
+            handleClick() {
+                var _this = this;
+                var url = "/api/house?type=1";
+                axios.post(url, this.form).then(function (res) {
+                    if (res.data != null) {
+                        console.info(res.data);
+                        _this.$messagebox('结果', JSON.stringify(res.data));
+                    }
+                }, function () {
+                    _this.$messagebox('结果', "错误");
+                })
+            },
+            handle2Click() {
+                var _this = this;
+                var url = "/api/house?type=2";
+                axios.post(url, this.form).then(function (res) {
+                    if (res.data != null) {
+                        console.info(res.data);
+                        _this.$messagebox('结果', JSON.stringify(res.data));
+                    }
+                }, function () {
+                    _this.$messagebox('结果', "错误");
+                })
+            },
+            handle3Click() {
+                var _this = this;
+                var url = "/api/house?type=3";
+                axios.post(url, this.form).then(function (res) {
+                    if (res.data != null) {
+                        console.info(res.data);
+                        _this.$messagebox('结果', JSON.stringify(res.data));
+                    }
+                }, function () {
+                    _this.$messagebox('结果', "错误");
+                })
+            },
+            handleNativeClick() {
                 this.$toast('Hello world!')
             },
-            handleNativeClick: function () {
-                this.$toast('Hello world!')
-            }
+            handleTabClick() {
+                // if (this.tab != '外卖') {
+                //     this.selected = this.tab;
+                // } else {
+                //     this.selected = 1;
+                //     this.tab = 'tab1';
+                // }
+                console.info(this.tab);
+                console.info("info");
+            },
+            handleNavClick() {
+                console.info(this.tab);
+                this.tab = 'tab1';
+                console.info(this.tab);
+            },
         }
     })
 
