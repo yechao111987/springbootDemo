@@ -7,26 +7,51 @@
     <meta name="author" content="">
     <title>House</title>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui@2.2.13/lib/style.css">
     <!-- 引入组件库 -->
 
 </head>
 <div id="app">
-    <mt-button @click.native="handleNativeClick">按钮</mt-button>
-    <mt-button @click="handleClick">按钮</mt-button>
-    <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
-    <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email"></mt-field>
-    <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"></mt-field>
-    <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone"></mt-field>
+    <div>
+        <mt-navbar v-model="selected">
+            <mt-tab-item id="1">选项一</mt-tab-item>
+            <mt-tab-item id="2">选项二</mt-tab-item>
+            <mt-tab-item id="3">选项三</mt-tab-item>
+        </mt-navbar>
+    </div>
+    <mt-tab-container v-model="selected">
+        <mt-tab-container-item id="1">
+            <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
+            <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email"></mt-field>
+            <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"></mt-field>
+            <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone"></mt-field>
+            <mt-button @click.native="handleNativeClick">按钮</mt-button>
+            <mt-button @click="handleClick">按钮</mt-button>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="2">
+            <mt-cell v-for="n in 4" :title="'测试 ' + n"/>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="3">
+            <mt-cell v-for="n in 6" :title="'选项 ' + n"/>
+        </mt-tab-container-item>
+    </mt-tab-container>
+
+
 </div>
 <body>
 <script src="/common/vue.js"></script>
-<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+
+<script src="https://unpkg.com/mint-ui@2.2.13/lib/index.js"></script>
 <script>
     var vm1 = new Vue({
         el: '#app',
         data: {
-            username: 12121
+            username: 12121,
+            selected: '1',
+            email: 1,
+            password: 1,
+            tel: 1,
+            phone: 1,
         },
         created: function () {
             console.info("1111");
