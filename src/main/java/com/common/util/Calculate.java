@@ -1,11 +1,9 @@
 package com.common.util;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.pojo.vo.PayInfo;
+import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 /**
  * @Author yechao111987@126.com
@@ -24,14 +22,14 @@ public class Calculate {
      */
     public static PayInfo calculateEqualPrincipal(double principal, int months, double rate, int current_month) {
         double capital_per_month = principal / months;
-        double interest = (principal - (current_month - 1) * capital_per_month) * rate / 1.2;
+        double interest = (principal - (current_month - 1) * capital_per_month) * rate / 12;
         double payPerMonth = capital_per_month + interest;
         PayInfo payInfo = new PayInfo();
         payInfo.setPayPerMonth(payPerMonth);
         payInfo.setRate(rate);
         payInfo.setMonth(current_month);
         payInfo.setPrincipal(principal);
-        payInfo.setTotal(principal);
+        payInfo.setTotal(principal + calTotalInterest(principal, rate, months));
         return payInfo;
     }
 
@@ -41,17 +39,15 @@ public class Calculate {
      * 等额本息每期还款本息总额 x = A * β * (1 + β) ^ k / [(1 + β) ^ k - 1]
      * <p>
      */
-
-    public static double calTotal(double sum, double rate, int period) {
-        BigDecimal sumB = new BigDecimal(sum);
-        BigDecimal rateB = new BigDecimal(rate / 1.2);
-        BigDecimal all = (sumB.multiply(rateB)).multiply((rateB.add(new BigDecimal(1))).pow(period));
-        System.out.println(all.toString());
-        BigDecimal temp = ((rateB.add(new BigDecimal(1))).pow(period)).subtract(new BigDecimal(1));
-        BigDecimal month_pay = all.divide(temp, 2, RoundingMode.DOWN);
-        System.out.println("Pay Per Month is :" + month_pay.toString());
-        return month_pay.doubleValue();
-
+    public static double calTotalInterest(double principal, double rate, int months) {
+        double capital_per_month = principal / months;
+        double totalInterest = 0;
+        for (int current_month = 1; current_month <= months; current_month++) {
+            double interest = (principal - (current_month - 1) * capital_per_month) * rate / 12;
+            totalInterest += interest;
+        }
+        System.out.println(totalInterest);
+        return totalInterest;
     }
 
 
@@ -65,7 +61,7 @@ public class Calculate {
      */
     public static PayInfo calculateEqualPrincipalAndInterest(double principal, int months, double rate, int current_month) {
         PayInfo payInfo = new PayInfo();
-        double monthRate = rate / 1.2;//月利率
+        double monthRate = rate / 12;//月利率
         //每月还款金额
         double preLoan = (principal * monthRate * Math.pow((1 + monthRate), months)) / (Math.pow((1 + monthRate), months) - 1);
         double totalMoney = preLoan * months;//还款总额
@@ -77,5 +73,19 @@ public class Calculate {
         payInfo.setRate(rate);
         payInfo.setPayPerMonth(preLoan);
         return payInfo;
+    }
+
+    @Test
+    public void testCalculateEqualPrincipal() {
+        PayInfo payInfo = calculateEqualPrincipal(1000000, 360, 0.049, 1);
+        double total = calTotalInterest(1000000, 0.049, 360);
+        System.out.println(total);
+        System.out.println(JSON.toJSONString(payInfo));
+    }
+
+    @Test
+    public void testCalculateEqualPrincipalAndInterest() {
+        PayInfo payInfo = calculateEqualPrincipalAndInterest(1000000, 360, 0.049, 1);
+        System.out.println(JSON.toJSONString(payInfo));
     }
 }

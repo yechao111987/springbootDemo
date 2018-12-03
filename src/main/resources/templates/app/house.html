@@ -16,7 +16,7 @@
         <!--<router-link to="/" slot="left">-->
         <mt-button icon="back">返回</mt-button>
         <!--</router-link>-->
-        <mt-button icon="more" slot="right"></mt-button>
+        <!--<mt-button icon="more" slot="right"></mt-button>-->
     </mt-header>
     <div>
         <mt-navbar v-model="selected" @click.native="handleNavClick">
@@ -27,7 +27,6 @@
     </div>
     <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-
             <mt-field label="单价(元)" placeholder="请输入单价" v-model="form.price"></mt-field>
             <mt-field label="面积(平方米)" placeholder="请输入面积" v-model="form.area"></mt-field>
             <mt-field label="按揭比例(%)" placeholder="请输入按揭比例" v-model="form.percentage"></mt-field>
@@ -39,10 +38,10 @@
                     :options="['等额本金', '等额本息']">
             </mt-radio>
             <!--<mt-button @click.native="handleNativeClick" visible="false">按钮</mt-button>-->
-            <mt-button @click="handleClick">计算</mt-button>
+            <mt-button @click="handleClick" type="primary" size="large">计算</mt-button>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-            <mt-field label="贷款金额" placeholder="请输入金额" v-model="form.fundTotal"></mt-field>
+            <mt-field label="贷款金额(万)" placeholder="请输入金额" v-model="form.fundTotal"></mt-field>
             <mt-field label="按揭时间(年)" placeholder="请输入年份" v-model="form.year" :visible.sync="isVisible"
                       visible="false"></mt-field>
             <!--<mt-field label="利率" placeholder="请输入利率倍数" v-model="form.rate"></mt-field>-->
@@ -51,12 +50,11 @@
                     v-model="form.type"
                     :options="['等额本金', '等额本息']">
             </mt-radio>
-            <mt-button @click="handle2Click">计算</mt-button>
-
+            <mt-button type="primary" size="large" @click="handle2Click">计算</mt-button>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
-            <mt-field label="公积金贷款金额" placeholder="请输入公积金贷款金额" v-model="form.fundTotalM"></mt-field>
-            <mt-field label="商业贷款金额" placeholder="请输入商业贷款金额" v-model="form.businessTotal"></mt-field>
+            <mt-field label="公积金贷款(万)" placeholder="请输入公积金贷款金额" v-model="form.fundTotalM"></mt-field>
+            <mt-field label="商业贷款(万)" placeholder="请输入商业贷款金额" v-model="form.businessTotal"></mt-field>
             <mt-field label="公积金按揭时间(年)" placeholder="请输入年份" v-model="form.fundYear" :visible.sync="isVisible"
                       visible="false"></mt-field>
             <mt-field label="商业按揭时间(年)" placeholder="请输入年份" v-model="form.businessYear"></mt-field>
@@ -67,7 +65,7 @@
             <!--<mt-picker :slots="dataList" :visible-item-count="5" :show-toolbar="true" ref="picker" value-key="cName">-->
             <!--<mt-button @click="handleConfirm" class="sure">确认</mt-button>-->
             <!--</mt-picker>-->
-            <mt-field label="商贷利率" placeholder="请输入利率倍数" v-model="form.businessRate"></mt-field>
+            <mt-field label="商贷利率(倍)" placeholder="请输入利率倍数" v-model="form.businessRate"></mt-field>
             <!--<mt-field label="利率" placeholder="请输入利率倍数" v-model="form.rate"></mt-field>-->
             <mt-radio
                     title="公积金贷款还款方式"
@@ -79,7 +77,8 @@
                     v-model="form.businessType"
                     :options="['等额本金', '等额本息']">
             </mt-radio>
-            <mt-button @click="handle3Click">计算</mt-button>
+            <hr>
+            <mt-button @click="handle3Click" type="primary" size="large">计算</mt-button>
         </mt-tab-container-item>
         <mt-tab-container-item id="订单">
         </mt-tab-container-item>
@@ -88,31 +87,27 @@
         <mt-tab-container-item id="我的">
         </mt-tab-container-item>
     </mt-tab-container>
-
     <!--<mt-tabbar v-model="tab" @click.native="handleTabClick">-->
-        <!--<mt-tab-item id="tab1">-->
-            <!--<img slot="icon">-->
-            <!--外卖-->
-        <!--</mt-tab-item>-->
-        <!--<mt-tab-item id="订单">-->
-            <!--<img slot="icon">-->
-            <!--订单-->
-        <!--</mt-tab-item>-->
-        <!--<mt-tab-item id="发现">-->
-            <!--<img slot="icon">-->
-            <!--发现-->
-        <!--</mt-tab-item>-->
-        <!--<mt-tab-item id="我的">-->
-            <!--<img slot="icon">-->
-            <!--我的-->
-        <!--</mt-tab-item>-->
+    <!--<mt-tab-item id="tab1">-->
+    <!--<img slot="icon">-->
+    <!--外卖-->
+    <!--</mt-tab-item>-->
+    <!--<mt-tab-item id="订单">-->
+    <!--<img slot="icon">-->
+    <!--订单-->
+    <!--</mt-tab-item>-->
+    <!--<mt-tab-item id="发现">-->
+    <!--<img slot="icon">-->
+    <!--发现-->
+    <!--</mt-tab-item>-->
+    <!--<mt-tab-item id="我的">-->
+    <!--<img slot="icon">-->
+    <!--我的-->
+    <!--</mt-tab-item>-->
     <!--</mt-tabbar>-->
-
-
 </div>
 <body>
 <script src="/common/vue.js"></script>
-
 <script src="https://unpkg.com/mint-ui@2.2.13/lib/index.js"></script>
 <script>
     var vm1 = new Vue({
