@@ -1,4 +1,4 @@
-package com.yechao.springboot.demo;
+package com;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;

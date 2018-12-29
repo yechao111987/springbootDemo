@@ -29,7 +29,6 @@ public class TestDataProvider {
         Thread.currentThread().sleep(5000);
         System.out.println("url:" + url + ", token:" + token + ", res:" + res);
         Thread.currentThread().sleep(500);
-
-
     }
+
 }
