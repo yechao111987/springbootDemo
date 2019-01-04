@@ -80,7 +80,7 @@ public class PdfUtil {
 
     @Test
     public void testPdf2Image() {
-        String pdfFilePath = "src/main/resources/第一节 CPU性能.pdf";
+        String pdfFilePath = "src/main/resources/pdf.pdf";
         String dstFolder = "src/main/resources/temp/";
         pdf2Image(pdfFilePath, dstFolder, 400);
     }
