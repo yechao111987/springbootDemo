@@ -82,7 +82,7 @@ public class PdfUtil {
     public void testPdf2Image() {
         String pdfFilePath = "src/main/resources/pdf.pdf";
         String dstFolder = "src/main/resources/temp/";
-        pdf2Image(pdfFilePath, dstFolder, 400);
+        pdf2Image(pdfFilePath, dstFolder, 800);
     }
 
 }

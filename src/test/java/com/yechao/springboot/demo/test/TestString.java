@@ -18,6 +18,9 @@ public class TestString {
         //获取指定字符出现的位置 indexOf lastIndexOf
         String name = " My Name Is YeChao! ";
         int a = name.indexOf("e");
+        logger.info("index of {} ", name.indexOf("e", 2));
+        logger.info("index of {} ", name.indexOf("e", 8));
+        logger.info("index of {} ", name.indexOf("e", 14));
         logger.info("index of {} ", a);
         int b = name.lastIndexOf("e");
         logger.info("last index of {} ", b);
@@ -51,7 +54,16 @@ public class TestString {
         logger.info("to upper case is {}", name.toUpperCase());
 
         //字符串分割
-        logger.info("spilt {}", name.split("e"));
+        logger.info("spilt {}", name.split("e").length);
+        logger.info("spilt {}", name.split("\\S+").length);
+        String info = "my name is yechao";
+        logger.info("spilt {}", info.split("\\S+").length);
+        logger.info("spilt {}", info.split(" "));
+        String[] ss = info.split(" ");
+        System.out.println(ss.length);
+        for (String s : ss) {
+            System.out.println(s);
+        }
 
 
     }

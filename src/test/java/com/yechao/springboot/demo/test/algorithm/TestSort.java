@@ -67,12 +67,80 @@ public class TestSort {
         return arr;
     }
 
+    public int[] quickSort(int[] arr, int left, int right) {
+        int length = arr.length;
+        int partitionIndex;
+        if (left < right) {
+            partitionIndex = partition(arr, left, right);
+            System.out.println("pIndex:" + partitionIndex);
+            quickSort(arr, 0, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, right);
+        }
+        return arr;
+    }
+
+    private int partition(int[] arr, int left, int right) {
+        int p = left;
+        int index = p + 1;
+        for (int i = index; i <= right; i++) {
+            if (arr[i] < arr[p]) {
+                int temp = arr[i];
+                arr[i] = arr[p];
+                arr[p] = temp;
+                index++;
+            }
+        }
+        int t = arr[p];
+        arr[p] = arr[index - 1];
+        arr[index - 1] = t;
+        return index - 1;
+    }
+
+    private void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    public int[] quickSort2(int[] arr, int left, int right) {
+        if (left < right) {
+            int i = left;
+            int j = right;
+            int key = arr[i];
+            while (i < j) {
+                //4.1 ，从右往左找到第一个小于key的数
+                while (i < j && arr[j] > key) {
+                    j--;
+                }
+                // 4.2 从左往右找到第一个大于key的数
+                while (i < j && arr[i] <= key) {
+                    i++;
+                }
+                //4.3 交换
+                if (i < j) {
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+            int temp = arr[i];
+            arr[i] = arr[left];
+            arr[left] = temp;
+            quickSort2(arr, left, i - 1);
+            quickSort2(arr, i + 1, right);
+        }
+        return arr;
+
+    }
+
     @Test
     public void testBubbleSort() {
-        int[] ints = {1, 5, 3, 7, 8, 10};
+        int[] ints = {1, 9, 5, 3, 7, 8, 10};
 //        int[] result = BubbleSort(ints);
 //        int[] result = selectionSort(ints);
         int[] result = insertionSort(ints);
+//        int[] result = quickSort(ints, 0, ints.length - 1);
+//        int[] result = quickSort2(ints, 0, ints.length - 1);
         for (int i = 0; i < result.length; i++) {
             System.out.println(result[i] + " ");
         }
