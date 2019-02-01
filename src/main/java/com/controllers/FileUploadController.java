@@ -81,7 +81,7 @@ public class FileUploadController {
     @RequestMapping(value = "/api/pdf/task/dowload/{taskId}", method = RequestMethod.GET)
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable String taskId, String fileName) throws IOException {
         PdfTask pdfTask = pdfTaskDao.findByTaskId(taskId);
-        String filePath = "file/out/" + pdfTask.getDest() + "/" + fileName;
+        String filePath = System.getProperty("user.dir") + "/file/out/" + pdfTask.getDest() + "/" + fileName;
         FileSystemResource file = new FileSystemResource(filePath);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");

@@ -4,8 +4,7 @@ var vm = new Vue({
         username: '叶超',
         dpi: 400,
         file: '',
-        selected: 1,
-        container: 1,
+        selected: '1',
         tasks: [],
         popupVisible: false,
         files: [],
@@ -13,8 +12,7 @@ var vm = new Vue({
         loading: false,
     },
     created() {
-        this.selected = 1;
-    },
+        },
     mounted() {
         var _this = this;
         var url = "/api/pdf/task/list";

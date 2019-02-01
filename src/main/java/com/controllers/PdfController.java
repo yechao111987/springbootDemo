@@ -100,7 +100,8 @@ public class PdfController {
             response.setMessage("任务不存在");
             return response;
         }
-        String path = "file/out/" + pdfTask.getDest() + "/";
+        String path = System.getProperty("user.dir") + "/file/out/" + pdfTask.getDest() + "/";
+        logger.info("file path:{}", path);
         File file = new File(path);
         String[] fileNames = file.list();
         PdfTaskVo pdfTaskVo = new PdfTaskVo();

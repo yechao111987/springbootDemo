@@ -45,7 +45,8 @@ public class ScheduleTask {
 
             //2.pdf文件转化为image
             try {
-                PdfUtil.pdf2Image("file/" + pdfTask.getTarget(), "file/out/", 400);
+                String pref = System.getProperty("user.dir");
+                PdfUtil.pdf2Image(pref + "/file/" + pdfTask.getTarget(), pref + "/file/out/", 400);
                 pdfTask.setStatus(PdfTaskStatus.FINUSHED.getIndex());
                 currentTime = TimeStampUtil.getTimeFormate("second");
                 pdfTask.setUpdateTime(currentTime);
