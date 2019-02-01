@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui@2.2.13/lib/style.css">
+    <!-- 引入组件库 -->
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
+</head>
+<body font="pingfang" class="grade-b">
+<div id="app">
+    <mt-header title="PDF转图片">
+        <router-link to="/" slot="left">
+            <mt-button icon="back">返回</mt-button>
+        </router-link>
+        <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
+    <mt-navbar v-model="selected">
+        <mt-tab-item id="1">转化结果</mt-tab-item>
+        <mt-tab-item id="2">上传pdf文件</mt-tab-item>
+    </mt-navbar>
+    <mt-tab-container v-model="selected">
+        <mt-tab-container-item id="1">
+            <ul>
+                <li v-for="n in tasks">
+                    <mt-cell :title="'文档: ' + n.target+', 任务状态: '+n.status+',提交时间: '+n.createTime">
+                        <!--<span style="width: 20%;">11111</span>-->
+                        <!--<span style="width: 20%;">22222</span>-->
+                        <mt-button size="small" type="primary" @click="view(n)">查看</mt-button>
+                        <mt-button size="small" type="danger" @click="deleteTask(n)">删除</mt-button>
+                        <mt-button size="small" type="default" @click="download(n)">下载</mt-button>
+                    </mt-cell>
+                    <mt-popup
+                            v-model="popupVisible" position="bottom"
+                            popup-transition="popup-fade">
+                        <!--<mt-cell title="生成文件">-->
+                        <ul v-infinite-scroll="loadMore"
+                            infinite-scroll-disabled="loading"
+                            infinite-scroll-distance="10">
+                            <!--<li v-for="item in files">{{ item }}</li>-->
+                            <li v-for="item in files">
+                                <span style="margin-right: 100%">{{item}}</span>
+                                <span></span>
+                                <mt-button style="margin-left: 80%" @click="downloadOne(item)" type="primary"
+                                           size="small"
+                                >下载
+                                </mt-button>
+                                <!--<img v-lazy="item">-->
+                            </li>
+                        </ul>
+                        <!--</mt-cell>-->
+
+                        <!--<mt-button size="small" type="primary">关闭</mt-button>-->
+                    </mt-popup>
+                </li>
+            </ul>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="2">
+            <a class="mint-cell mint-field">
+                <div class="mint-cell-left"></div>
+                <div class="mint-cell-wrapper">
+                    <div class="mint-cell-title">
+                        <span class="mint-cell-text">PDF文件</span>
+                    </div>
+                    <div class="mint-cell-value"><input id="file" type="file" class="mint-field-core"
+                                                        v-on:change="uploadFile($event)" accept=".pdf"
+                    >
+                        <div class="mint-field-clear" style="display: none;"><i class="mintui mintui-field-error"></i>
+                        </div>
+                        <span class="mint-field-state is-default"><i class="mintui mintui-field-default"></i></span>
+                        <div class="mint-field-other"></div>
+                    </div>
+                </div>
+                <div class="mint-cell-right"></div>
+            </a>
+            <mt-field label="dpi" placeholder="请输入图片像素" type="number" v-model="dpi"></mt-field>
+            <mt-button size="large" type="primary" @click="toImage">转化</mt-button>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="3">
+            <mt-cell v-for="n in 6" :title="'选项 ' + n"/>
+        </mt-tab-container-item>
+    </mt-tab-container>
+</div>
+
+
+<script src="/common/vue.js"></script>
+<script src="https://unpkg.com/mint-ui@2.2.13/lib/index.js"></script>
+<!--<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>-->
+
+<script src="/js/pdf.js"></script>
+</body>
+</html>
