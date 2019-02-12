@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
@@ -56,8 +57,16 @@ public class PdfUtil {
                     imgFilePath.append(String.valueOf(i + 1));
                     imgFilePath.append(".png");
                     File dstFile = new File(imgFilePath.toString());
-                    BufferedImage image = renderer.renderImageWithDPI(i, dpi);
-                    ImageIO.write(image, "png", dstFile);
+                    try {
+                        BufferedImage image = renderer.renderImageWithDPI(i, dpi);
+                        Thread.sleep(2000);
+                        ImageIO.write(image, "png", dstFile);
+                        Thread.sleep(10000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("error：PDF文档转PNG图片失败 ");
+                    }
+
                 }
                 System.out.println("PDF文档转PNG图片成功！");
             } else {
@@ -79,6 +88,7 @@ public class PdfUtil {
     }
 
     @Test
+    @Ignore
     public void testPdf2Image() {
         String pdfFilePath = "src/main/resources/无房证明-yechao.pdf";
         String dstFolder = "src/main/resources/temp/";

@@ -32,6 +32,12 @@ public class ScheduleTask {
     @Scheduled(fixedRate = 3000 * 1)   //定时任务间隔3S,没3S轮询任务
     public void pdfTaskSchedule() {
         List<PdfTask> pdfTaskList = pdfTaskDao.findAllByStatusOrderById(PdfTaskStatus.WAITING.getIndex());
+        List<PdfTask> progressingPdfTaskList = pdfTaskDao.findAllByStatusOrderById(PdfTaskStatus.PROGRESSING.getIndex());
+        if (progressingPdfTaskList != null && progressingPdfTaskList.size() > 0) {
+            //防止linux服务器内核因为java内存占用过高杀死java进程
+            logger.info("任务处理ing");
+            return;
+        }
         if (null == pdfTaskList || pdfTaskList.size() == 0) {
             logger.info("暂无待处理任务");
         } else {
@@ -46,7 +52,8 @@ public class ScheduleTask {
             //2.pdf文件转化为image
             try {
                 String pref = System.getProperty("user.dir");
-                PdfUtil.pdf2Image(pref + "/file/" + pdfTask.getTarget(), pref + "/file/out/", 400);
+                PdfUtil.pdf2Image(pref + "/file/" + pdfTask.getTarget(),
+                        pref + "/file/out/", pdfTask.getDpi());
                 pdfTask.setStatus(PdfTaskStatus.FINUSHED.getIndex());
                 currentTime = TimeStampUtil.getTimeFormate("second");
                 pdfTask.setUpdateTime(currentTime);

@@ -68,13 +68,13 @@ var vm = new Vue({
             })
         },
         view(p) {
-            this.popupVisible = true;
             var _this = this;
             _this.taskId = p.taskId;
             var url = "/api/pdf/task/" + p.taskId;
             axios.get(url).then(function (res) {
                 if (res.data.code == '200') {
                     _this.files = res.data.dataResult.dest;
+                    this.popupVisible = true;
                 } else {
                     _this.$toast(res.data.message);
                 }
