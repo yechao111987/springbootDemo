@@ -43,7 +43,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.29</version>
+            <version>8.0.16</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.13.1</version>
             <!--<scope>test</scope>-->
         </dependency>
         <!--springboot 热部署插件,springboot 1.3开始支持-->
@@ -104,7 +104,7 @@
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.15</version>
         </dependency>
         <dependency>
             <groupId>commons-cli</groupId>
